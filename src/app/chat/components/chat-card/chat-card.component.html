@@ -1,0 +1,14 @@
+
+
+<div class="chat-message" (click)="changeChat()">
+  <div class="avatar">
+    <img [src]="contact?.avatar ? contact?.avatar : 'default-user.svg'" class="card-avatar" alt="Contact avatar">
+  </div>
+  <div class="message-content">
+    <div class="header">
+      <span class="name">{{ contact?.fullName ? contact?.fullName : chat.name }}</span>
+      <span class="timestamp">{{ lastMessage?.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
+    </div>
+    <div class="message-preview">{{ lastMessage?.content ? lastMessage?.content : 'Say Hi! 👋' }}</div>
+  </div>
+</div>

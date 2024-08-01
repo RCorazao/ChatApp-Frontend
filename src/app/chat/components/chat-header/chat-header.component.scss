@@ -1,0 +1,25 @@
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.chat-image {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.chat-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+h5 {
+  margin: 0;
+  color: white;
+}

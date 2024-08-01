@@ -1,0 +1,35 @@
+.container {
+  background-color: #1e2630;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-header {
+  flex: 0 0 auto; /* header height is fixed */
+}
+
+.divider {
+  flex: 0 0 auto; /* divider height is fixed */
+}
+
+h5 {
+  padding: 0 10px;
+  margin: 0; /* Ensure no extra margin is added */
+}
+
+h5 > hr {
+  border: none;
+  border-top: 2px solid #273039;
+}
+
+chat-message-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}

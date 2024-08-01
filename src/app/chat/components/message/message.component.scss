@@ -1,0 +1,24 @@
+.chat-bubble {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  margin: 5px;
+}
+
+.chat-bubble.owner {
+  justify-content: flex-end;
+}
+
+.message {
+  background-color: #161a20;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  max-width: 60%;
+  word-wrap: break-word;
+  font-size: 16px;
+}
+
+.chat-bubble.owner .message {
+  background-color: #1c77c3; /* Different color for owned messages */
+}

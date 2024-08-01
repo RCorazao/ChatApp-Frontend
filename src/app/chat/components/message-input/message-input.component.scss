@@ -1,0 +1,39 @@
+
+.message-input-container {
+  display: flex;
+  align-items: center;
+  background-color: #1e2630;
+  padding: 10px;
+}
+
+.message-input-container input {
+  flex: 1;
+  background-color: #161a20;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 15px;
+  margin: 10px 0;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.message-input-container button {
+  background-color: #1c77c3;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-input-container button:hover {
+  background-color: #074374;
+}
+
+.message-input-container img {
+  width: 24px;
+  height: 24px;
+}

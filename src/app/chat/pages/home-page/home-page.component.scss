@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  // height: calc(100vh - 4px);
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  height: calc(100vh - 32px);
+  // box-sizing: border-box;
+}
+
+.chat-container {
+  flex: 1;
+  overflow-y: auto;
+  border-radius: 0 10px 10px 0;
+}
