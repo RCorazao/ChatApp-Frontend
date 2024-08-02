@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
 import { ChatModule } from './chat/chat.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -14,11 +17,14 @@ import { ChatModule } from './chat/chat.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ChatModule
+    ChatModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync(),
-    provideHttpClient()
+    provideHttpClient(),
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

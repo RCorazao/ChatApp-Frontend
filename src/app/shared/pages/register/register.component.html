@@ -1,0 +1,60 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Register</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <span class="icon"><i class="fas fa-user"></i></span>
+        <input type="text" class="form-control" formControlName="firstName" placeholder="First name">
+      </div>
+      <div *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched" class="error">
+        Field is required.
+      </div>
+
+      <div class="input-group">
+        <span class="icon"><i class="fas fa-user"></i></span>
+        <input type="text" class="form-control" formControlName="lastName" placeholder="Last name">
+      </div>
+      <div *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched" class="error">
+        Field is required.
+      </div>
+
+      <div class="input-group">
+        <span class="icon"><i class="fas fa-envelope"></i></span>
+        <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
+      </div>
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error">
+        Invalid email address.
+      </div>
+
+      <div class="input-group">
+        <span class="icon"><i class="fas fa-lock"></i></span>
+        <input type="password" class="form-control" formControlName="password" placeholder="Password">
+      </div>
+      <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="error">
+        Password is required.
+      </div>
+
+      <div class="input-group">
+        <span class="icon"><i class="fas fa-image"></i></span>
+        <input type="file" (change)="onFileChange($event)" class="form-control" placeholder="Avatar">
+      </div>
+      <div *ngIf="avatarError" class="error">
+        {{ avatarError }}
+      </div>
+      <div *ngIf="form.get('avatar')?.invalid && form.get('avatar')?.touched && !avatarError" class="error">
+        Avatar is required.
+      </div>
+
+      <div *ngIf="avatarPreview" class="avatar-preview">
+        <img [src]="avatarPreview" alt="Avatar Preview">
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid">Register</button>
+      </div>
+      <div class="register">
+        <span>Do you have an account? <a href="login">Login</a></span>
+      </div>
+    </form>
+  </div>
+</div>
