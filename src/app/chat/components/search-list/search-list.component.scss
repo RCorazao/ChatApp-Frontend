@@ -1,0 +1,84 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #161a20;
+  border-radius: 16px;
+  padding: 20px 16px;
+  color: #fff;
+  width: 200px;
+  height: 280px;
+  margin: 10px;
+}
+
+.search-card-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.search-card-content {
+  margin: 0 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.search-card-content-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-card-content-text h3 {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  font-size: 1.1em;
+  line-height: 1.2;
+}
+
+.search-card-content-text span {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+.search-card-actions {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.search-card-actions button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-card-actions button:hover {
+  background-color: #0056b3;
+}
+
+.search-card-actions button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.search-card-actions button:nth-child(2):hover {
+  background-color: #b02a37;
+}

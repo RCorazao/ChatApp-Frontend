@@ -1,0 +1,19 @@
+
+<div class="container">
+  <div *ngFor="let chat of searchList" class="list-chats">
+    <div class="search-card">
+      <div class="search-card-image">
+        <img [src]="chat.avatar ? chat.avatar : 'default-user.svg'" class="" alt="avatar">
+      </div>
+      <div class="search-card-content">
+        <div class="search-card-content-text">
+          <h3>{{ chat.fullName }}</h3>
+          <span>{{ chat.email }}</span>
+        </div>
+        <div class="search-card-actions">
+          <button (click)="createChat(chat.id)">{{ chat.isContact ? 'Go to conversation' : 'Start a conversation' }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

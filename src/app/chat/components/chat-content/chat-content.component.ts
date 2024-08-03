@@ -5,6 +5,7 @@ import { Chat } from '../../interfaces/chat.interface';
 import { Subscription } from 'rxjs';
 import { Message } from '../../interfaces/message.interface';
 import { v4 as uuid } from 'uuid';
+import { UserContactResponse } from '../../interfaces/response.interface';
 
 @Component({
   selector: 'chat-content',
@@ -17,6 +18,8 @@ export class ChatContentComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   public currentChat: Chat | null = null;
   public messages: Message[] = [];
+  public isOnTop: boolean = false;
+  public searchChats: UserContactResponse[] = [];
 
   constructor(private chatService: ChatService) {}
 
@@ -25,6 +28,7 @@ export class ChatContentComponent implements OnInit, OnDestroy {
       this.chatService.currentChat$.subscribe(chat => {
         this.currentChat = chat;
         this.messages = [];
+        this.isOnTop = false;
         this.loadMessages();
       })
     );
@@ -52,14 +56,18 @@ export class ChatContentComponent implements OnInit, OnDestroy {
     }   
   }
 
-  private loadMessages(): void {
-    if (this.currentChat) {
-      this.chatService.getMessages(this.currentChat.id)
-        .subscribe(
-          messages => {
-            messages.map( m => this.messages.push(m) )
-          }
-        );
+  public loadMessages(): void {  
+    if (!this.isOnTop) {
+      const countExpect = 30;
+      if (this.currentChat) {
+        this.chatService.getMessages(this.currentChat.id, this.messages.length, countExpect)
+          .subscribe(
+            messages => {
+              messages.map( m => this.messages.push(m) )
+              this.isOnTop = !(messages.length === countExpect);
+            }
+          );
+      }
     }
   }
 
@@ -84,6 +92,17 @@ export class ChatContentComponent implements OnInit, OnDestroy {
         );
     }
   }
+
+  searchContact( value: string ) {
+    if (!this.currentChat) {
+      this.chatService.searchChats(value)
+        .subscribe( response => {
+          this.searchChats = response;
+        } );
+    }
+  }
+
+  // ============================================================
 
   private buildMessage( content: string ): Message {
     const tempId = uuid();

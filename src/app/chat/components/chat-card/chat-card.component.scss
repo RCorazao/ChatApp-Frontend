@@ -5,6 +5,11 @@
   border-bottom: 1px solid #1e2630;
 }
 
+.is-active {
+  border-radius: 5px;
+  border-bottom: 4px solid #0057bc;
+}
+
 .chat-message:hover {
   background-color: #0057bc;
   border-radius: 5px;

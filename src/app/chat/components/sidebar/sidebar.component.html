@@ -1,5 +1,16 @@
-<div id="sidebar">
-  <div class="sidebar-header">ChatApp</div>
+<div id="sidebar" class="container">
+  <div class="sidebar-header">
+    <div class="header-user">
+      <img [src]="user.avatar ? user.avatar : 'default-user.svg'" class="user-avatar" alt="user">
+      <h5>{{ user.fullName }}</h5>
+    </div>
+    <div #menuContainer class="menu-container">
+      <button class="menu-button" (click)="toggleMenu()">&#x22EE;</button>
+      <div class="menu" *ngIf="isMenuOpen">
+        <button (click)="disconnect()">Disconnect</button>
+      </div>
+    </div>
+  </div>
   <h5>
     <hr>
   </h5>

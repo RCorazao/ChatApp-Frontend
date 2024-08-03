@@ -11,6 +11,8 @@ import { ChatHeaderComponent } from './components/chat-header/chat-header.compon
 import { MessageListComponent } from './components/message-list/message-list.component';
 import { MessageComponent } from './components/message/message.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
+import { SearchListComponent } from './components/search-list/search-list.component';
 
 
 
@@ -24,7 +26,9 @@ import { MessageInputComponent } from './components/message-input/message-input.
     ChatHeaderComponent,
     MessageListComponent,
     MessageComponent,
-    MessageInputComponent
+    MessageInputComponent,
+    SearchInputComponent,
+    SearchListComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
 
 
-<div class="chat-message" (click)="changeChat()">
+<div class="chat-message" [ngClass]="{'is-active' : isCurrentChat()}" (click)="changeChat()">
   <div class="avatar">
     <img [src]="contact?.avatar ? contact?.avatar : 'default-user.svg'" class="card-avatar" alt="Contact avatar">
   </div>

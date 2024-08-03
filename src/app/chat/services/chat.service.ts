@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 
-import { ChatMessageResponse, ChatResponse, MessageResponse } from '../interfaces/response.interface';
+import { ChatMessageResponse, ChatResponse, MessageResponse, SearchResponse, UserContactResponse } from '../interfaces/response.interface';
 import { Chat } from '../interfaces/chat.interface';
 import { Message } from '../interfaces/message.interface';
 import { User } from '../interfaces/user.interface';
@@ -60,9 +60,9 @@ export class ChatService {
       );
   }
 
-  getMessages(chatId: string, pageNumber: number = 1, pageSize: number = 30): Observable<Message[]> {
+  getMessages(chatId: string, skip: number = 0, pageSize: number = 30): Observable<Message[]> {
     const requestBody = {
-      pageNumber,
+      skip,
       pageSize
     }
 
@@ -81,10 +81,50 @@ export class ChatService {
     }
 
     return this.http
-      .post<MessageResponse>(`${this.serviceUrl}/messages/`, requestBody, { withCredentials: true })
+      .post<MessageResponse>(`${this.serviceUrl}/messages`, requestBody, { withCredentials: true })
       .pipe(
         map(response => response.success ? response.data : null)
       );
   }
-  
+
+  searchChats(filter: string, pageNumber: number = 0, pageSize: number = 20): Observable<UserContactResponse[]> {
+    const requestBody = {
+      filter,
+      pageNumber,
+      pageSize
+    }
+
+    return this.http
+      .post<SearchResponse>(`${this.serviceUrl}/chats/search-chats`, requestBody, { withCredentials: true })
+      .pipe(
+        map(response => response.success ? response.data : []),
+        catchError( () => of() )
+      );
+  }
+
+  createChat( userId: number ): Observable<Chat | null> {
+    const requestBody = {
+      userId
+    }
+
+    return this.http
+      .post<ChatMessageResponse>(`${this.serviceUrl}/chats/create-chat`, requestBody, { withCredentials: true })
+      .pipe(
+        map(response => response.success ? response.data : null),
+        catchError( this.handleError )
+      );
+  }
+
+  addChat(newChat: Chat): void {
+    const currentChats = this._chatsSubject.value;
+    const chatExists = currentChats.some(chat => chat.id === newChat.id);
+    if (!chatExists) {
+      const updatedChats = [...currentChats, newChat];
+      this._chatsSubject.next(updatedChats);
+    }
+  }
+
+  handleError(error: HttpErrorResponse) {
+    return throwError( () => error );
+  }
 }

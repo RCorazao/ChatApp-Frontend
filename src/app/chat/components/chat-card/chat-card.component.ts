@@ -12,22 +12,28 @@ import { User } from '../../interfaces/user.interface';
 export class ChatCardComponent {
   @Input()
   public chat!: Chat;
-  public currentUser: number = 3;
 
   constructor ( private chatService: ChatService ) { }
+
+
 
   get contact(): User | null {
     return this.chat.type !== 0 
       ? null 
-      : this.chat.users.find(user => user.id !== this.currentUser) ?? null;
+      : this.chat.users.find(user => user.id !== this.chatService.loggedUser.id) ?? null;
   }
 
   get lastMessage(): Message | null {
     return this.chat.messages[0];
   }
 
+  isCurrentChat(): boolean {
+    return this.chat.id === this.chatService.currentChat?.id;
+  }
+
   changeChat(){
-    this.chatService.currentChat = this.chat;
+    if (!this.isCurrentChat())
+      this.chatService.currentChat = this.chat;
   }
 
 }

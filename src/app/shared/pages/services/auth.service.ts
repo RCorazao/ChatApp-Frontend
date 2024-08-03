@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { SignInResponse, SignUpResponse } from '../../interfaces/response.interface';
+import { BaseResponse, SignInResponse, SignUpResponse } from '../../interfaces/response.interface';
 import { SignInRequest } from '../../interfaces/signin.interface';
 import { ChatService } from '../../../chat/services/chat.service';
 import { User } from '../../../chat/interfaces/user.interface';
@@ -54,6 +54,24 @@ export class AuthService {
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  logout() {
+    this.http
+      .post<BaseResponse>(`${this.serviceUrl}/auth/logout`, {}, { withCredentials: true })
+      .pipe(
+        catchError(error => {
+          console.log('Logout failed', error);
+          return of(null);
+        })
+      )
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.router.navigate(['/login']);
+        },
+        error: () => console.log('An error occurred')
+      });
   }
 
   handleError(error: HttpErrorResponse) {

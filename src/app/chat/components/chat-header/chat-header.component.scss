@@ -3,7 +3,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 10px 35px;
+  height: 80px;
+}
+
+.chat-contact {
+  display: flex;
+  flex-direction: row;
 }
 
 .chat-image {
@@ -22,4 +29,14 @@
 h5 {
   margin: 0;
   color: white;
+}
+
+.exit-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.exit-icon > svg {
+  height: 40px;
 }
