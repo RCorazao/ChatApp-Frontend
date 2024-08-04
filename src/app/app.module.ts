@@ -9,6 +9,7 @@ import { ChatModule } from './chat/chat.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CookieService } from 'ngx-cookie-service';
     BrowserModule,
     AppRoutingModule,
     ChatModule,
+    AuthModule,
     SharedModule,
     ReactiveFormsModule
   ],

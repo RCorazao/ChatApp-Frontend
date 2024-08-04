@@ -3,7 +3,7 @@ import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../interfaces/chat.interface';
 import { Subscription } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
-import { AuthService } from '../../../shared/pages/services/auth.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'chat-sidebar',

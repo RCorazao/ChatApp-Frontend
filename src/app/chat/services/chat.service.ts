@@ -6,7 +6,7 @@ import { ChatMessageResponse, ChatResponse, MessageResponse, SearchResponse, Use
 import { Chat } from '../interfaces/chat.interface';
 import { Message } from '../interfaces/message.interface';
 import { User } from '../interfaces/user.interface';
-import { AuthService } from '../../shared/pages/services/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class ChatService {

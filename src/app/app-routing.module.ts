@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './chat/pages/home-page/home-page.component';
-import { LoginComponent } from './shared/pages/login/login.component';
-import { RegisterComponent } from './shared/pages/register/register.component';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { RegisterComponent } from './auth/pages/register/register.component';
 import { AuthGuard, NoAuthGuard } from './auth.guard';
 
 const routes: Routes = [

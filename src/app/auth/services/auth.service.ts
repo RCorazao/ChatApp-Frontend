@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { BaseResponse, SignInResponse, SignUpResponse } from '../../interfaces/response.interface';
-import { SignInRequest } from '../../interfaces/signin.interface';
-import { ChatService } from '../../../chat/services/chat.service';
-import { User } from '../../../chat/interfaces/user.interface';
+import { BaseResponse, SignInResponse, SignUpResponse } from '../interfaces/response.interface';
+import { SignInRequest } from '../interfaces/signin.interface';
+import { ChatService } from '../../chat/services/chat.service';
+import { User } from '../../chat/interfaces/user.interface';
 import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
