@@ -45,6 +45,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   disconnect() {
     this.toggleMenu();
+    this.chatService.currentChat = null;
     this.authService.logout();
   }
 

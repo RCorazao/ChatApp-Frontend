@@ -7,6 +7,8 @@ import { Chat } from '../interfaces/chat.interface';
 import { Message } from '../interfaces/message.interface';
 import { User } from '../interfaces/user.interface';
 import { AuthService } from '../../auth/services/auth.service';
+import { Notification } from '../interfaces/notification.interface';
+import { SignalRService } from '../../shared/services/signalr.service';
 
 @Injectable({providedIn: 'root'})
 export class ChatService {
@@ -21,8 +23,13 @@ export class ChatService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private signalRService: SignalRService
+  ) {
+    this.signalRService.messageReceived.subscribe( (notification: Notification) => {
+      this.handleNewMessage(notification);
+    });
+  }
 
   get loggedUser(): User {
     return this.authService.loggedUser!;
@@ -87,6 +94,21 @@ export class ChatService {
       );
   }
 
+  handleNewMessage(notification: Notification) {
+    let chat = this.chats.find( p => p.id === notification.chat.id );
+    if (!chat) {
+      chat = this.addChat(notification.chat);
+    }
+
+    this.addMessage(chat!, notification.message);
+  }
+
+  addMessage(chat: Chat, message: Message) {
+    chat.messages[0] = message;
+    this.chats.splice(this.chats.indexOf(chat), 1);
+    this.chats.unshift(chat);
+  }
+
   searchChats(filter: string, pageNumber: number = 0, pageSize: number = 20): Observable<UserContactResponse[]> {
     const requestBody = {
       filter,
@@ -115,13 +137,15 @@ export class ChatService {
       );
   }
 
-  addChat(newChat: Chat): void {
+  addChat(newChat: Chat): Chat {
     const currentChats = this._chatsSubject.value;
-    const chatExists = currentChats.some(chat => chat.id === newChat.id);
+    const chatExists = currentChats.find(chat => chat.id === newChat.id);
     if (!chatExists) {
       const updatedChats = [...currentChats, newChat];
       this._chatsSubject.next(updatedChats);
+      return newChat;
     }
+    return chatExists;
   }
 
   handleError(error: HttpErrorResponse) {

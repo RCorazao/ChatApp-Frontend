@@ -6,6 +6,7 @@ import { SignInRequest } from '../interfaces/signin.interface';
 import { ChatService } from '../../chat/services/chat.service';
 import { User } from '../../chat/interfaces/user.interface';
 import { Router } from '@angular/router';
+import { SignalRService } from '../../shared/services/signalr.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -15,13 +16,15 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private signalRService: SignalRService
   ) { }
   
   isAuthenticated(): Observable<boolean> {
     return this.me().pipe(
       map(response => {
         this.loggedUser = response.data;
+        this.startNotifications();
         return !!this.loggedUser;
       }),
       catchError(() => {
@@ -68,10 +71,20 @@ export class AuthService {
       .subscribe({
         next: response => {
           console.log(response);
+          this.finishNotifications();
           this.router.navigate(['/login']);
         },
         error: () => console.log('An error occurred')
       });
+  }
+
+  startNotifications() {
+    this.signalRService.startConnection();
+    this.signalRService.addMessageListener();
+  }
+
+  finishNotifications() {
+    this.signalRService.stopConnection();
   }
 
   handleError(error: HttpErrorResponse) {

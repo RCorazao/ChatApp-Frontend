@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Message } from '../../interfaces/message.interface';
 import { v4 as uuid } from 'uuid';
 import { UserContactResponse } from '../../interfaces/response.interface';
+import { SignalRService } from '../../../shared/services/signalr.service';
+import { Notification } from '../../interfaces/notification.interface';
 
 @Component({
   selector: 'chat-content',
@@ -21,7 +23,14 @@ export class ChatContentComponent implements OnInit, OnDestroy {
   public isOnTop: boolean = false;
   public searchChats: UserContactResponse[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private signalRService: SignalRService
+  ) {
+    this.signalRService.messageReceived.subscribe( (notification: Notification) => {
+      this.handleNewMessage(notification);
+    });
+  }
 
   ngOnInit() {
     this.subscription.add(
@@ -73,9 +82,7 @@ export class ChatContentComponent implements OnInit, OnDestroy {
 
   sendMessage( content: string ) {
     if (this.currentChat) {
-      
       const newMessage = this.buildMessage(content);
-      
       this.messages.unshift(newMessage);
 
       this.chatService.sendMessage(newMessage.chatId, newMessage.content)
@@ -84,13 +91,20 @@ export class ChatContentComponent implements OnInit, OnDestroy {
             if (result) {
               newMessage.id = result.id;
               newMessage.createdAt = result.createdAt;
-              this.currentChat!.messages[0] = newMessage;
+              this.chatService.addMessage(this.currentChat!, newMessage);
             } else {
               this.removeMessage(newMessage.id);
             }
           }
         );
     }
+  }
+
+  handleNewMessage(notification: Notification) {  
+    const message = notification.message;
+    if ( notification.isCurrentUser ) return;
+
+    this.messages.unshift(message);
   }
 
   searchContact( value: string ) {
