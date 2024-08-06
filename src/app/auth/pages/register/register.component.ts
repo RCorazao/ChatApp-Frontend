@@ -66,8 +66,20 @@ export class RegisterComponent {
         next: () => {
           this.router.navigate(['/login']);
         },
-        error: err => console.log('SignUp errors: ', err)
+        error: err => this.handleBackendErrors(err)
       });
+  }
+
+  handleBackendErrors(error: any) {   
+    if (error.error && error.error.errors) {
+      const backendErrors = error.error.errors;
+      Object.keys(backendErrors).forEach((field) => {
+        const control = this.form.get(field.toLowerCase());        
+        if (control) {
+          control.setErrors({ backend: backendErrors[field] });
+        }
+      });
+    }
   }
 
 }

@@ -44,6 +44,9 @@
       <div *ngIf="form.get('avatar')?.invalid && form.get('avatar')?.touched && !avatarError" class="error">
         Avatar is required.
       </div>
+      <div *ngIf="form.get('avatar')!.hasError('backend')" class="error">
+        {{ form.get('avatar')!.getError('backend') }}
+      </div>
 
       <div *ngIf="avatarPreview" class="avatar-preview">
         <img [src]="avatarPreview" alt="Avatar Preview">
