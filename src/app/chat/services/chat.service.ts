@@ -9,11 +9,12 @@ import { User } from '../interfaces/user.interface';
 import { AuthService } from '../../auth/services/auth.service';
 import { Notification } from '../interfaces/notification.interface';
 import { SignalRService } from '../../shared/services/signalr.service';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({providedIn: 'root'})
 export class ChatService {
 
-  private serviceUrl: string = 'http://localhost:10000/api';
+  private serviceUrl: string = environment.chatUrl + '/api';
 
   private _chatsSubject = new BehaviorSubject<Chat[] | []>([]);
   chats$ = this._chatsSubject.asObservable();
@@ -54,7 +55,7 @@ export class ChatService {
 
   getChats(): void {
     this.http
-      .get<ChatResponse>(`${this.serviceUrl}/chats`, { withCredentials: true })
+      .get<ChatResponse>(`${this.serviceUrl}/chats`)
       .pipe(
         map(response => response.success ? response.data : []),
         tap(response => this._chatsSubject.next(response)),
@@ -74,7 +75,7 @@ export class ChatService {
     }
 
     return this.http
-      .post<ChatMessageResponse>(`${this.serviceUrl}/chats/${chatId}`, requestBody, { withCredentials: true })
+      .post<ChatMessageResponse>(`${this.serviceUrl}/chats/${chatId}`, requestBody)
       .pipe(
         map(response => response.success ? response.data.messages : []),
         catchError( () => of([]) )
@@ -88,7 +89,7 @@ export class ChatService {
     }
 
     return this.http
-      .post<MessageResponse>(`${this.serviceUrl}/messages`, requestBody, { withCredentials: true })
+      .post<MessageResponse>(`${this.serviceUrl}/messages`, requestBody)
       .pipe(
         map(response => response.success ? response.data : null)
       );
@@ -117,7 +118,7 @@ export class ChatService {
     }
 
     return this.http
-      .post<SearchResponse>(`${this.serviceUrl}/chats/search-chats`, requestBody, { withCredentials: true })
+      .post<SearchResponse>(`${this.serviceUrl}/chats/search-chats`, requestBody)
       .pipe(
         map(response => response.success ? response.data : []),
         catchError( () => of() )
@@ -130,7 +131,7 @@ export class ChatService {
     }
 
     return this.http
-      .post<ChatMessageResponse>(`${this.serviceUrl}/chats/create-chat`, requestBody, { withCredentials: true })
+      .post<ChatMessageResponse>(`${this.serviceUrl}/chats/create-chat`, requestBody)
       .pipe(
         map(response => response.success ? response.data : null),
         catchError( this.handleError )

@@ -7,6 +7,14 @@ export interface BaseResponse {
 }
 
 export interface SignInResponse extends BaseResponse {
+  data: {
+    user: User;
+    accessToken: string;
+    expiresAt: string;
+  }
+}
+
+export interface MeResponse extends BaseResponse {
   data: User;
 }
 

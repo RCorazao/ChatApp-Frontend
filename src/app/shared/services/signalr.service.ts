@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Notification } from '../../chat/interfaces/notification.interface';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,14 @@ export class SignalRService {
   public messageReceived = new EventEmitter<Notification>();
 
   public startConnection() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:10000/notificationHub', { withCredentials: true })
+      .configureLogging(signalR.LogLevel.Error)
+      .withUrl( environment.chatUrl + '/notificationHub', {
+        accessTokenFactory: () => token
+      })
       .withAutomaticReconnect()
       .build();
 

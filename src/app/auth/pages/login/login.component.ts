@@ -35,7 +35,8 @@ export class LoginComponent {
     this.authService.signIn(request)
       .subscribe( {
         next: response => {
-          this.authService.loggedUser = response.data;
+          this.authService.loggedUser = response.data?.user;
+          localStorage.setItem('accessToken', response.data!.accessToken);
           this.router.navigate(['/chat']);
         },
         error: err => this.message = err.error.message
